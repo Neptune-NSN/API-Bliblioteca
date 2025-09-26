@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    .form-container
+        h2 Login
+        form#loginForm
+            input(type="text" id="identifier" placeholder="Email ou carteirinha" required)
+            input(type="password" id="password" placeholder="Senha" required)
+            button(type="submit") Entrar
+            p#errorLogin.error
+        p
+            | Não tem conta?
+            a(href="/register") Cadastre-se

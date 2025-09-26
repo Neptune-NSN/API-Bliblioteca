@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    .form-container
+        h2 Cadastro
+        form#registerForm
+            input(type="text" id="name" placeholder="Nome completo" required)
+            input(type="email" id="email" placeholder="Email institucional" required)
+            input(type="text" id="card_number" placeholder="Número da carteirinha")
+            input(type="password" id="password" placeholder="Senha" required)
+            button(type="submit") Cadastrar
+            p#errorRegister.error
+        p
+            | Já tem conta?
+            a(href="/") Login
