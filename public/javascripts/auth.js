@@ -1,6 +1,5 @@
 const API_URL = "http://localhost:3000/api/auth";
 
-// Login
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.addEventListener('submit', async e => {
@@ -19,7 +18,9 @@ if (loginForm) {
 
             if (res.ok) {
                 localStorage.setItem('token', data.token);
-                alert("Login realizado com sucesso!");
+                localStorage.setItem('user', JSON.stringify(data.user));
+
+                window.location.href = "/user";
             } else {
                 errorEl.textContent = data.error || "Erro no login";
             }
@@ -29,7 +30,6 @@ if (loginForm) {
     });
 }
 
-// Cadastro
 const registerForm = document.getElementById('registerForm');
 if (registerForm) {
     registerForm.addEventListener('submit', async e => {

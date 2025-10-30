@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  .user-container
+    h2 Bem-vindo ao seu espaço, <span id="userName">Usuário</span>!
+    p Aqui você pode:
+    ul
+      li Consultar livros disponíveis
+      li Solicitar empréstimo de livros
+      li Renovar empréstimos
+      li Visualizar seus empréstimos ativos
+
+    h3 Meus empréstimos
+    ul#myLoansList
+
+    h3 Solicitar empréstimo de livro
+    select#bookSelect
+      option(value="") -- selecione um livro --
+    button#borrowBtn Solicitar Empréstimo
+
+    h3 Livros disponíveis
+    ul#booksList
+
+    button(onclick="logout()") Sair
+
+  script.
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    document.getElementById('userName').textContent = user.name || 'Usuário';
+
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = "/";
+    }
+
+  script(src="/javascripts/books.js")
+  script(src="/javascripts/loans.js")
