@@ -1,6 +1,14 @@
 import express from 'express';
-import { requestLoan, renewLoan, myActiveLoans } from '../controllers/loans.controller.js';
-import { requireAuth } from '../middleware/auth.js';
+import {
+  requestLoan,
+  renewLoan,
+  myActiveLoans,
+  adminListPendingLoans,
+  adminApproveLoan,
+  adminRejectLoan
+} from '../controllers/loans.controller.js';
+
+import { requireAuth, requireAdmin } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -9,5 +17,9 @@ router.use(requireAuth);
 router.post('/request', requestLoan);
 router.post('/renew/:loanId', renewLoan);
 router.get('/me', myActiveLoans);
+
+router.get('/admin/pending', requireAdmin, adminListPendingLoans);
+router.post('/admin/:loanId/approve', requireAdmin, adminApproveLoan);
+router.post('/admin/:loanId/reject', requireAdmin, adminRejectLoan);
 
 export default router;
