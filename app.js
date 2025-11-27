@@ -4,11 +4,10 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import { fileURLToPath } from 'url';
-import authRoutes from './src/routes/auth.routes.js';
 
+import authRoutes from './src/routes/auth.routes.js';
 import indexRouter from './src/routes/index.js';
-import usersRouter from './src/routes/users.js';
-import userRouter from './src/routes/user.routes.js';
+import userRoutes from './src/routes/user.routes.js';
 import booksRoutes from './src/routes/books.routes.js';
 import loansRoutes from './src/routes/loans.routes.js';
 
@@ -27,11 +26,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/books', booksRoutes);
 app.use('/api/loans', loansRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/user', userRouter);
 
 app.use((req, res, next) => next(createError(404)));
 

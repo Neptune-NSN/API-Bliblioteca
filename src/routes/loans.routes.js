@@ -1,6 +1,6 @@
 import express from 'express';
 import { requestLoan, renewLoan, myActiveLoans } from '../controllers/loans.controller.js';
-import { requireAuth } from '../middleware/auth.middleware.js';
+import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
