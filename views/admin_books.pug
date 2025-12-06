@@ -1,0 +1,134 @@
+extends layout
+
+block content
+  style.
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 25px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h2 {
+      color: #038C5A;
+      font-size: 32px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    h3 {
+      color: #027246;
+      margin-top: 25px;
+      font-size: 22px;
+    }
+
+    form#createBookForm {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 15px;
+      align-items: center;
+    }
+
+    form#createBookForm input {
+      width: 80%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    form button {
+      background-color: #038C5A;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-top: 10px;
+      transition: 0.2s;
+    }
+
+    form button:hover {
+      background-color: #027246;
+    }
+
+    hr {
+      margin: 30px 0;
+      border: none;
+      border-top: 2px solid #e6e6e6;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      text-align: center;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    thead {
+      background-color: #038C5A;
+      color: white;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    tr:hover {
+      background-color: #f2f2f2;
+    }
+
+    button.action-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 2px;
+      background-color: #038C5A;
+      transition: 0.2s;
+    }
+
+    button.action-btn:hover {
+      background-color: #027246;
+    }
+
+  .container
+    h2 Gestão de Livros
+
+    h3 Cadastrar Novo Livro
+    form#createBookForm
+      input(type="text" name="title" placeholder="Título" required)
+      input(type="text" name="author" placeholder="Autor" required)
+      input(type="text" name="isbn" placeholder="ISBN" required)
+      input(type="number" name="total_copies" placeholder="Total de cópias" required)
+      button(type="submit") Criar Livro
+
+    hr
+
+    h3 Livros Cadastrados
+    table
+      thead
+        tr
+          th ID
+          th Título
+          th Autor
+          th ISBN
+          th Total
+          th Disponíveis
+          th Ações
+      tbody#booksTable
+        tr
+          td(colspan="7") Carregando...
+
+  script(src="/javascripts/admin_guard.js")  
+  script(src="/javascripts/admin_books.js")

@@ -1,37 +1,143 @@
 extends layout
 
 block content
-  .user-container
-    h2 Bem-vindo ao seu espaço, <span id="userName">Usuário</span>!
-    p Aqui você pode:
-    ul
-      li Consultar livros disponíveis
-      li Solicitar empréstimo de livros
-      li Renovar empréstimos
-      li Visualizar seus empréstimos ativos
+  style.
+    body {
+      display: block !important;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+      height: auto !important;
+    }
+    
+    .user-dashboard {
+      width: 100%;
+      max-width: 900px;
+      margin: 20px;
+    }
 
-    h3 Meus empréstimos
-    ul#myLoansList
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-    h3 Solicitar empréstimo de livro
-    select#bookSelect
-      option(value="") -- selecione um livro --
-    button#borrowBtn Solicitar Empréstimo
+    .loan-card {
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      position: relative;
+    }
 
-    h3 Livros disponíveis
-    ul#booksList
+    .loan-card.late {
+      background-color: #ffb3b3;
+    }
 
-    button(onclick="logout()") Sair
+    .renew-info {
+      font-size: 14px;
+      font-weight: bold;
+    }
 
+    .renew-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background-color: #038C5A;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .renew-btn:hover {
+      background-color: #027246;
+    }
+
+    #loanPage, #booksPage {
+      margin-top: 20px;
+    }
+
+    .book-card {
+      border: 1px solid #ccc;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .simple-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: white;
+      background-color: #038C5A;
+    }
+
+    .simple-btn:hover {
+      background-color: #027246;
+    }
+
+  .user-dashboard
+    h2 Bem vindo(a),
+      span#userName
+
+    .header-row
+      h3.seusEmprestimos Seus empréstimos
+      button.simple-btn(onclick="openBooksPage()") Fazer empréstimo
+
+    #loanPage
+      ul#myLoansList
+
+    #booksPage(style="display:none;")
+      h3 Livros disponíveis
+      ul#booksList
+      .action-buttons
+        button.simple-btn(style="background:#888" onclick="cancelBooksPage()") Cancelar
+        button.simple-btn(onclick="requestLoan()") Solicitar empréstimo
+
+    button(style="margin-top:20px" onclick="logout()") Sair 
+    
   script.
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    document.getElementById('userName').textContent = user.name || 'Usuário';
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      const span = document.getElementById("userName");
+
+      if (span && user.name) {
+        span.innerText = user.name;
+      } else {
+        span.innerText = "Usuário";
+      }
+    });
 
     function logout() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       window.location.href = "/";
     }
 
-  script(src="/javascripts/books.js")
+    function openBooksPage() {
+      document.getElementById("loanPage").style.display = "none";
+      document.getElementById("booksPage").style.display = "block";
+    }
+
+    function cancelBooksPage() {
+      document.getElementById("booksPage").style.display = "none";
+      document.getElementById("loanPage").style.display = "block";
+    }
+
+    function requestLoan() {
+      if (!selectedBookId) {
+        alert("Selecione um livro primeiro!");
+        return;
+      }
+      borrowBook(selectedBookId);
+    }
+
   script(src="/javascripts/loans.js")

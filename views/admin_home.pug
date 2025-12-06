@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  style.
+    .admin-home-container {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .admin-title {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .admin-subtitle {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    .admin-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .admin-btn {
+      background-color: #038C5A;
+      color: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 20px;
+      transition: 0.2s ease;
+      display: inline-block;
+      width: 250px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .admin-btn:hover {
+      background-color: #027246;
+      transform: translateY(-3px);
+    }
+
+  .admin-home-container
+    h2.admin-title Painel do Administrador
+    p.admin-subtitle Escolha uma das opções abaixo:
+
+    .admin-buttons
+      a.admin-btn(href="/admin/books") Gerenciar Livros
+      a.admin-btn(href="/admin/loans") Gerenciar Empréstimos
+
+  
+
+  script(src="/javascripts/admin_guard.js")

@@ -71,5 +71,10 @@ async function requestLoan() {
 
 document.addEventListener('DOMContentLoaded', () => {
   fetchAvailableBooks();
-  document.getElementById('borrowBtn').addEventListener('click', requestLoan);
+  document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("borrowBtn");
+  if (btn) {
+    btn.addEventListener("click", requestLoan);
+  }
+});
 });

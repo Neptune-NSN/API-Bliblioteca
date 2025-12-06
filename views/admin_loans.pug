@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  style.
+    body {
+      display: block !important;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+      height: auto !important;
+    }
+  .container(style="width: 100%; max-width: 900px; margin-top: 1px;")
+
+    h2(style="margin-bottom: 15px; text-align: left;") Gerenciar Empréstimos
+
+    .tab-buttons(style="display: flex; gap: 10px; margin-bottom: 20px;")
+      button.tab-button#btnPending(
+        style="padding: 10px 20px; border-radius: 6px; border: none; background-color: #027246; color: white; cursor: pointer;"
+      ) Gerenciar Pendentes
+
+      button.tab-button#btnActive(
+        style="padding: 10px 20px; border-radius: 6px; border: none; background-color: #027246  ; color: white; cursor: pointer;"
+      ) Gerenciar Ativos
+
+    .section#pendingSection(style="display: none; margin-top: 10px;")
+      h3(style="margin-bottom: 10px;") Empréstimos Pendentes de Aprovação
+      ul#pendingList(style="list-style: none; padding: 0;")
+        li Carregando...
+
+    .section#activeSection(style="display: none; margin-top: 10px;")
+      h3(style="margin-bottom: 10px;") Empréstimos Ativos (ordenados por vencimento)
+      ul#activeList(style="list-style: none; padding: 0;")
+        li Carregando...
+
+  script(src="/javascripts/admin_guard.js")
+  script(src="/javascripts/admin_loans.js")

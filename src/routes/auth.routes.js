@@ -4,6 +4,15 @@ import { register, login } from "../controllers/auth.controller.js";
 
 const router = express.Router();
 
+router.get('/register', (req, res) => {
+  res.render('register');
+});
+
+router.get('/login', (req, res) => {
+  res.render('index'); // sua página de login
+});
+
+
 router.post(
     '/register',
     [

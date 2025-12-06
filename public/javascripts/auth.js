@@ -19,11 +19,15 @@ if (loginForm) {
             if (res.ok) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
+                localStorage.setItem('role', data.user.role);
 
-                window.location.href = "/user";
-            } else {
-                errorEl.textContent = data.error || "Erro no login";
+                if (data.user.role === "admin") {
+                    window.location.href = "/admin";
+                } else {
+                    window.location.href = "/user";
+                }
             }
+
         } catch (err) {
             errorEl.textContent = "Erro ao conectar com o servidor";
         }

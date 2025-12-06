@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node --watch src/server.js",
-    "db:migrate": "psql \"$DATABASE_URL\" -f src/db/migrations.sql"
+    "dev": "nodemon src/server.js",
+    "db:migrate": "bash -c 'psql \"$DATABASE_URL\" -f src/db/migrations.sql'"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -20,5 +20,8 @@
     "morgan": "~1.9.1",
     "pg": "^8.12.0",
     "pug": "2.0.0-beta11"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }

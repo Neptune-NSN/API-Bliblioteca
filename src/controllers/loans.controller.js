@@ -235,3 +235,59 @@ export async function adminRejectLoan(req, res) {
         return res.status(500).json({ error: 'erro interno' });
     }
 }
+
+export async function adminListAllLoans(req, res) {
+    try {
+        const result = await query(
+            `SELECT 
+                l.id, l.status, l.borrowed_at AS "borrowedAt", l.due_at AS "dueAt",
+                l.renewed_count AS "renewedCount", l.max_renewals AS "maxRenewals",
+                u.name AS "userName", u.email AS "userEmail",
+                b.title AS "bookTitle"
+            FROM loans l
+            JOIN users u ON u.id = l.user_id
+            JOIN books b ON b.id = l.book_id
+            ORDER BY 
+                (l.status = 'active' AND l.due_at < NOW()) DESC, -- atrasados primeiro
+                l.borrowed_at DESC`
+        );
+
+        return res.json({ loans: result.rows });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'erro interno' });
+    }
+}
+
+export async function adminReturnLoan(req, res) {
+    const { loanId } = req.params;
+
+    try {
+        const updateLoan = await query(
+            `UPDATE loans 
+             SET status = 'returned', returned_at = NOW()
+             WHERE id = $1 AND status = 'active'
+             RETURNING book_id`,
+            [loanId]
+        );
+
+        if (updateLoan.rows.length === 0) {
+            return res.status(400).json({ message: "Empréstimo inválido ou já devolvido." });
+        }
+
+        const bookId = updateLoan.rows[0].book_id;
+
+        await query(
+            `UPDATE books 
+             SET available_copies = available_copies + 1 
+             WHERE id = $1`,
+            [bookId]
+        );
+
+        return res.json({ message: "Livro marcado como devolvido com sucesso!" });
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Erro ao marcar devolução." });
+    }
+}
