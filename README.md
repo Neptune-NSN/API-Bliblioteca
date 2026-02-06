@@ -1,3 +1,5 @@
+Fully complete and working online library prototype with admin and user functions, complete with full database and developed as part of an IEEE student branch project.
+
 ```md
 # API Biblioteca - Autenticação
 
